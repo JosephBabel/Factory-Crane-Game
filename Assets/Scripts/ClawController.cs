@@ -32,61 +32,41 @@ public class ClawController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Jump"))
-        {
             OpenClaw();
-        }
         
         if (Input.GetButtonUp("Jump"))
-        {
             CloseClaw();
-        }
     }
 
     // ABSTRACTION
     void OpenClaw()
     {
-        // Left arm
         hingeSpring = leftArmJoint.spring;
+
+        // Left and back arm
         hingeSpring.targetPosition = -openTargetPos;
         leftArmJoint.spring = hingeSpring;
-
-        // Right arm
-        hingeSpring = rightArmJoint.spring;
-        hingeSpring.targetPosition = openTargetPos;
-        rightArmJoint.spring = hingeSpring;
-
-        // Back arm
-        hingeSpring = backArmJoint.spring;
-        hingeSpring.targetPosition = -openTargetPos;
         backArmJoint.spring = hingeSpring;
 
-        // Front arm
-        hingeSpring = frontArmJoint.spring;
+        // Right and front arm
         hingeSpring.targetPosition = openTargetPos;
+        rightArmJoint.spring = hingeSpring;
         frontArmJoint.spring = hingeSpring;
     }
 
     // ABSTRACTION
     void CloseClaw()
     {
-        // Left arm
         hingeSpring = leftArmJoint.spring;
+
+        // Left and back arm
         hingeSpring.targetPosition = closedTargetPos;
         leftArmJoint.spring = hingeSpring;
-
-        // Right arm
-        hingeSpring = rightArmJoint.spring;
-        hingeSpring.targetPosition = -closedTargetPos;
-        rightArmJoint.spring = hingeSpring;
-
-        // Back arm
-        hingeSpring = backArmJoint.spring;
-        hingeSpring.targetPosition = closedTargetPos;
         backArmJoint.spring = hingeSpring;
 
-        // Front arm
-        hingeSpring = frontArmJoint.spring;
+        // Right and front arm
         hingeSpring.targetPosition = -closedTargetPos;
+        rightArmJoint.spring = hingeSpring;
         frontArmJoint.spring = hingeSpring;
     }
 }

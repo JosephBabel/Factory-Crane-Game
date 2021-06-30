@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &262997770
+--- !u!1 &709295993
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,28 +8,76 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 262997771}
-  m_Layer: 0
-  m_Name: Claw Position
+  - component: {fileID: 709295994}
+  - component: {fileID: 709295995}
+  - component: {fileID: 709295996}
+  - component: {fileID: 709295997}
+  m_Layer: 8
+  m_Name: ClawTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &262997771
+--- !u!4 &709295994
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262997770}
+  m_GameObject: {fileID: 709295993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.51, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4681709526795959969}
-  m_RootOrder: 3
+  m_Father: {fileID: 1334821377210015835}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &709295995
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709295993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.4
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &709295996
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709295993}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!138 &709295997
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709295993}
+  m_ConnectedBody: {fileID: 5868386161176319729}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &42738016609024259
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +90,7 @@ GameObject:
   - component: {fileID: 2173064158639843177}
   - component: {fileID: 2939591365840359516}
   m_Layer: 0
-  m_Name: Right Arm
+  m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +120,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42738016609024259}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -92,10 +140,10 @@ HingeJoint:
   m_Anchor: {x: 0.41, y: 2.21, z: 0}
   m_Axis: {x: 0, y: 0, z: 90}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.45007014, y: -7.8810844, z: 0}
+  m_ConnectedAnchor: {x: 0.45007026, y: -7.8810835, z: -0.00000009685755}
   m_UseSpring: 1
   m_Spring:
-    spring: 10000
+    spring: 600
     damper: 0
     targetPosition: -40
   m_UseMotor: 0
@@ -286,7 +334,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038576233888010428}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -381,7 +429,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959274854185598672}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -399,7 +447,7 @@ GameObject:
   - component: {fileID: 6877555618485993413}
   - component: {fileID: 622091040111742690}
   m_Layer: 0
-  m_Name: Left Arm
+  m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,7 +477,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2321813144843676268}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -449,10 +497,10 @@ HingeJoint:
   m_Anchor: {x: -0.41, y: 2.21, z: 0}
   m_Axis: {x: 0, y: 0, z: 90}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.45007062, y: -7.8810844, z: 0}
+  m_ConnectedAnchor: {x: -0.4500705, y: -7.8810835, z: -0.00000011175871}
   m_UseSpring: 1
   m_Spring:
-    spring: 10000
+    spring: 600
     damper: 0
     targetPosition: 40
   m_UseMotor: 0
@@ -562,7 +610,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2340366421930219830}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -657,7 +705,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3291872347790658152}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -914,7 +962,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5207566603224862080}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1009,7 +1057,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5238264084743556165}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1027,7 +1075,7 @@ GameObject:
   - component: {fileID: 19656875}
   m_Layer: 0
   m_Name: Claw
-  m_TagString: Untagged
+  m_TagString: Claw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1077,7 +1125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1334821377210015835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Crane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1097,6 +1145,7 @@ Transform:
   m_Children:
   - {fileID: 4681709526795959969}
   - {fileID: 5398670231789147496}
+  - {fileID: 709295994}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1112,7 +1161,7 @@ GameObject:
   - component: {fileID: 3212054897596835972}
   - component: {fileID: 5378942370240646967}
   m_Layer: 0
-  m_Name: Front Arm
+  m_Name: FrontArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1142,7 +1191,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7163960462035044347}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -1160,12 +1209,12 @@ HingeJoint:
   m_ConnectedBody: {fileID: 5868386161176319729}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 2.21, z: -0.41}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -7.8810844, z: -0.45007133}
+  m_ConnectedAnchor: {x: -0.000000044703484, y: -7.8810835, z: -0.45007038}
   m_UseSpring: 1
   m_Spring:
-    spring: 10000
+    spring: 600
     damper: 0
     targetPosition: -40
   m_UseMotor: 0
@@ -1198,7 +1247,7 @@ GameObject:
   - component: {fileID: 224003479925631258}
   - component: {fileID: 2155565519624105585}
   m_Layer: 0
-  m_Name: Back Arm
+  m_Name: BackArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1228,7 +1277,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7194864460723542652}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -1246,12 +1295,12 @@ HingeJoint:
   m_ConnectedBody: {fileID: 5868386161176319729}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 2.21, z: 0.41}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -7.8810844, z: 0.45007133}
+  m_ConnectedAnchor: {x: 0.0000001937151, y: -7.8810835, z: 0.45007056}
   m_UseSpring: 1
   m_Spring:
-    spring: 10000
+    spring: 600
     damper: 0
     targetPosition: 40
   m_UseMotor: 0
@@ -1305,7 +1354,6 @@ Transform:
   - {fileID: 6923117564716965407}
   - {fileID: 4067824604029844576}
   - {fileID: 9045224735629103821}
-  - {fileID: 262997771}
   m_Father: {fileID: 1334821377210015835}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1317,11 +1365,11 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7536129681616382649}
   serializedVersion: 2
-  m_Mass: 30
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1351,12 +1399,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52b8e5ad59567e49ad635790c757255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topYPos: 25
-  bottomYPos: 2
-  vertSpeed: 14
-  xzSpeed: 16
-  vertMoveDelay: 0.3
-  xzMoveDelay: 0.15
+  downSpeed: 40000
+  upSpeed: 80000
+  xzSpeed: 70000
+  vertMoveDelay: 0
+  xzMoveDelay: 0
+  xzBreakDampener: 400
+  maxVelocity: 5
 --- !u!1 &8728625971167389542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,7 +1495,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8728625971167389542}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1541,7 +1590,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8890595531020237527}
-  m_Material: {fileID: 13400000, guid: 1b89cf406edc6094a955509dffffe217, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

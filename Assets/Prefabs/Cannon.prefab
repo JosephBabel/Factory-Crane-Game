@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 283051365065705031}
   - component: {fileID: 9142946224206483182}
   - component: {fileID: 2998420651983843512}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8085473269053258219}
   - component: {fileID: 6244828918631825666}
   - component: {fileID: 8661635706671332228}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 2662423258310278671}
   - component: {fileID: 3214596871467190490}
   - component: {fileID: 1818366202773538115}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 7621883559457987732}
   - component: {fileID: 4558304667188001328}
   - component: {fileID: 8815298562960166452}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5856333981114114728}
-  m_Layer: 0
+  - component: {fileID: 946873211}
+  m_Layer: 6
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,3 +419,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &946873211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856333981114114729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0b7b1bd05a67f429fdb166dd50e6eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonBall: {fileID: 5454755786702156287, guid: 2bc4174f0c30841439a9552893e9c6b5, type: 3}
+  cannonBallForce: 20
+  cannonBallTorque: 70
