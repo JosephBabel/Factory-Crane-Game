@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Special item that breaks upon dropping.
+/// </summary>
 // INHERITANCE
 public class ItemFragile : Item
 {
@@ -10,9 +11,9 @@ public class ItemFragile : Item
     // POLYMORPHISM
     protected override void OnDrop()
     {
-        AudioManager.instance.PlayClipAt("Drop", transform.position);
+        AudioManager.instance.PlayClip("Drop", transform.position);
         GameObject particleInstace = Instantiate(smokeParticle, transform.position, Quaternion.identity);
-        Destroy(particleInstace, 2.5f);
-        Destroy(gameObject);
+        Destroy(particleInstace, particleInstace.GetComponent<ParticleSystem>().main.duration);
+        gameObject.SetActive(false);
     }
 }

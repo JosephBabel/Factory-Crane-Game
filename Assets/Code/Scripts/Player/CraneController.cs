@@ -1,118 +1,107 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages control of crane movement on XZ-axis and vertically.
+/// </summary>
 public class CraneController : MonoBehaviour
 {
-    [SerializeField] private float downForce = 40000.0f;
-    [SerializeField] private float upForce = 80000.0f;
-    [SerializeField] private float xzForce = 50000.0f;
+    [Header("Crane Movement Settings")]
+    [SerializeField] private float breakDampener = 400f;
+    [SerializeField] private float clampVelocity = 12f;
 
-    [SerializeField] private float breakDampener = 400.0f;
-    [SerializeField] private float clampXZVelocity = 5.0f;
-    [SerializeField] private float clampVertVelocity = 10.0f;
-    [SerializeField] private float clampVelocity = 12.0f;
-    [SerializeField] private float ceilingYBuffer = 43.0f;
+    [Header("Vertical Movement Settings")]
+    [SerializeField] private float downForce = 40000f;
+    [SerializeField] private float upForce = 80000f;
+    [SerializeField] private float clampVertVelocity = 10f;
+    [SerializeField] private float ceilingYBuffer = 43f;
 
-    private Rigidbody rb;
+    [Header("XZ Movement Settings")]
+    [SerializeField] private float xzForce = 50000f;
+    [SerializeField] private float clampXZVelocity = 5f;
+
+    private Rigidbody rb => GetComponent<Rigidbody>();
 
     private bool isMovingXZ = false;
     private bool isMovingDown = false;
     private bool isInDropArea = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        // Horizontal controls (forwards, backwards, left, right)
-        if (!isMovingXZ && (Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
-            StartCoroutine(MoveXZ());
+        if (GameManager.instance.isRunning)
+        {
+            // Horizontal controls (forwards, backwards, left, right)
+            if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+                isMovingXZ = true;
+            else
+                isMovingXZ = false;
 
-        // Vertical Controls (up, down)
-        if(!isInDropArea && !isMovingDown && Input.GetButton("Jump"))
-            StartCoroutine(MoveVert());
+            // Vertical Controls (up, down)
+            if (!isMovingDown && Input.GetButton("Jump") && !isInDropArea && transform.position.y >= 20)
+            {
+                isMovingDown = true;
+                AudioManager.instance.StartCraneSound();
+            }
+            else if ((isMovingDown && !Input.GetButton("Jump")) || transform.position.y < 20)
+            {
+                isMovingDown = false;
+                AudioManager.instance.StopCraneSound();
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        if (!isMovingDown)
-        {
-            if (transform.position.y < ceilingYBuffer)
-            {
-                rb.AddForce(Time.deltaTime * upForce * Vector3.up, ForceMode.Acceleration);
+        if (isMovingDown)
+            MoveDown();
+        else
+            MoveUp();
 
-            }
-            else
-            {
-                Vector3 breakVec = new Vector3(0, -rb.velocity.normalized.y, 0);
-                rb.AddForce(breakVec * breakDampener, ForceMode.Acceleration);
-            }
-        }
-
-        if (!isMovingXZ)
-        {
-            Vector3 breakVec = new Vector3(-rb.velocity.normalized.x, 0, -rb.velocity.normalized.z);
-            rb.AddForce(breakVec * breakDampener, ForceMode.Acceleration);
-        }
+        if (isMovingXZ)
+            MoveXZ();
+        else
+            StopMoveXZ();
 
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampVelocity);
     }
 
-    IEnumerator MoveXZ()
+    void MoveXZ()
     {
-        isMovingXZ = true;
+        float horzDirection = Input.GetAxis("Horizontal");
+        float vertDirection = Input.GetAxis("Vertical");
 
-        while (isMovingXZ)
-        {
-            float horzDirection = Input.GetAxis("Horizontal");
-            float vertDirection = Input.GetAxis("Vertical");
+        Vector3 moveToPosition = (Vector3.right * horzDirection) + (Vector3.forward * vertDirection);
 
-            Vector3 moveToPosition = (Vector3.right * horzDirection) + (Vector3.forward * vertDirection);
+        if (moveToPosition.magnitude > 1) 
+            moveToPosition = moveToPosition.normalized;
 
-            if (moveToPosition.magnitude > 1) 
-                moveToPosition = moveToPosition.normalized;
-
-            rb.AddForce(Time.deltaTime * xzForce * moveToPosition, ForceMode.Acceleration);
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampXZVelocity);
-
-            if (!Input.GetButton("Horizontal") && !Input.GetButton("Vertical"))
-            {
-                isMovingXZ = false;
-                break;
-            }
-
-            yield return new WaitForFixedUpdate();
-        }
+        rb.AddForce(Time.deltaTime * xzForce * moveToPosition, ForceMode.Acceleration);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampXZVelocity);
     }
 
-    IEnumerator MoveVert()
+    void StopMoveXZ()
     {
-        isMovingDown = true;
+        Vector3 breakVec = new Vector3(-rb.velocity.normalized.x, 0, -rb.velocity.normalized.z);
+        rb.AddForce(breakVec * breakDampener, ForceMode.Acceleration);
+    }
 
-        AudioManager.instance.StartCraneSound();
+    void MoveDown()
+    {
+        rb.AddForce(Time.deltaTime * downForce * Vector3.down, ForceMode.Acceleration);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampVertVelocity);
+    }
 
-        while (isMovingDown)
+    void MoveUp()
+    {
+        if (transform.position.y < ceilingYBuffer)
         {
-            if (Input.GetButton("Jump"))
-            {
-                rb.AddForce(Time.deltaTime * downForce * Vector3.down, ForceMode.Acceleration);
-                rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampVertVelocity);
-            }
-            else
-            {
-                isMovingDown = false;
-                break;
-            }
-
-            yield return new WaitForFixedUpdate();
+            rb.AddForce(Time.deltaTime * upForce * Vector3.up, ForceMode.Acceleration);
         }
-
-        AudioManager.instance.StopCraneSound();
+        else
+        {
+            Vector3 breakVec = new Vector3(0, -rb.velocity.normalized.y, 0);
+            rb.AddForce(breakVec * breakDampener, ForceMode.Acceleration);
+        }
     }
 
     void OnTriggerEnter(Collider other)

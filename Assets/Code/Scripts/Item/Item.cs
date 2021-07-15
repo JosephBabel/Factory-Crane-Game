@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base item class. By default item profit is cut in half upon dropping it.
+/// </summary>
 public class Item : MonoBehaviour
 {
+    // Inspector settings
     public int profit;
 
     private bool wasGrabbed;
@@ -11,6 +13,7 @@ public class Item : MonoBehaviour
 
     protected virtual void OnDrop() 
     {
+        GameManager.instance.IncrementItemsDropped();
         profit /= 2;
     }
 

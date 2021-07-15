@@ -1,9 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls opening and closing of claw.
+/// </summary>
 public class ClawController : MonoBehaviour
 {
+    // Inspector Settings
+    [SerializeField] private float openTargetPos = 40f;
+    [SerializeField] private float closedTargetPos = 40f;
+
     public GameObject leftArm;
     public GameObject rightArm;
     public GameObject backArm;
@@ -15,9 +20,6 @@ public class ClawController : MonoBehaviour
     private HingeJoint frontArmJoint;
 
     private JointSpring hingeSpring;
-
-    [SerializeField] private float openTargetPos = 40.0f;
-    [SerializeField] private float closedTargetPos = 40.0f;
 
     void Start()
     {
@@ -38,7 +40,6 @@ public class ClawController : MonoBehaviour
             CloseClaw();
     }
 
-    // ABSTRACTION
     void OpenClaw()
     {
         hingeSpring = leftArmJoint.spring;
@@ -54,7 +55,6 @@ public class ClawController : MonoBehaviour
         frontArmJoint.spring = hingeSpring;
     }
 
-    // ABSTRACTION
     void CloseClaw()
     {
         hingeSpring = leftArmJoint.spring;

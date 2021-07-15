@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Moves object at constant speed to left and right bounds created on local x-axis.
+/// </summary>
 public class MoveDropBox : MonoBehaviour
 {
-    private float speed => GameManager.instance.dropBoxSpeed;
-
+    // Inspector settings
     [SerializeField] private float leftBounds = -5f;
     [SerializeField] private float rightBounds = 5f;
+
+    private float speed => GameManager.instance.dropBoxSpeed;
 
     private Vector3 leftPos;
     private Vector3 rightPos;

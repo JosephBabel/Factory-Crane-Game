@@ -114,3 +114,4 @@ MonoBehaviour:
   - {fileID: 8462753956159851141, guid: 755bf7e599f734443bce55c3a2948b1b, type: 3}
   - {fileID: 5984161676880369470, guid: 2e781e0217dcee54a8c2b8a183c1b249, type: 3}
   - {fileID: 3610977037931327740, guid: 0b15aa6e873c46140949092419665371, type: 3}
+  objectPool: {fileID: 0}

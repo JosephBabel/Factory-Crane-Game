@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Special item that explodes upon dropping.
+/// </summary>
 public class ItemExplosive : Item
 {
     private CannonBall cannonBall;
@@ -13,6 +12,7 @@ public class ItemExplosive : Item
 
     protected override void OnDrop()
     {
+        GameManager.instance.IncrementBombsExploded();
         cannonBall.Explode();
     }
 }

@@ -1,40 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawns cannonballs and launches them.
+/// </summary>
 public class Cannon : MonoBehaviour
 {
-    public GameObject cannonBall;
+    // Inspector settings
+    public ObjectPooling objectPool;
 
-    [SerializeField] private float cannonBallForce = 100.0f;
-    [SerializeField] private float cannonBallTorque = 50.0f;
+    [Header("Cannon Ball Settings")]
+    [SerializeField] private float cannonBallForce = 100f;
+    [SerializeField] private float cannonBallTorque = 50f;
 
+    // Get GameManager difficulty settings
     private float minSpawnTimer => GameManager.instance.cannonBallMinSpawnTimer;
     private float maxSpawnTimer => GameManager.instance.cannonBallMaxSpawnTimer;
 
     private float nextSpawnTime;
+    private float timer;
 
     void Start()
     {
-        nextSpawnTime = Random.Range(minSpawnTimer, maxSpawnTimer);
-        StartCoroutine(SpawnCannonBalls());
+        nextSpawnTime = Random.Range(2, 5);
     }
 
-    IEnumerator SpawnCannonBalls()
+    void Update()
     {
-        while (true)
+        if (GameManager.instance.isRunning)
         {
-            while (GameManager.instance.isRunning)
+            timer += Time.deltaTime;
+            if (timer >= nextSpawnTime)
             {
-                yield return new WaitForSeconds(nextSpawnTime);
-                GameObject newCannonBall = Instantiate(cannonBall, transform.position, Quaternion.identity);
-                Rigidbody cannonBallRb = newCannonBall.GetComponent<Rigidbody>();
-                cannonBallRb.AddForce(transform.TransformDirection(Vector3.right) * cannonBallForce, ForceMode.Impulse);
-                cannonBallRb.AddTorque(transform.TransformDirection(Vector3.back) * cannonBallTorque, ForceMode.Impulse);
+                SpawnCannonBall();
                 nextSpawnTime = Random.Range(minSpawnTimer, maxSpawnTimer);
+                timer = 0f;
             }
+        }
+    }
 
-            yield return null;
+    void SpawnCannonBall()
+    {
+        GameObject newCannonBall = objectPool.RetrieveCannonBall();
+
+        if (newCannonBall != null)
+        {
+            newCannonBall.transform.position = gameObject.transform.position;
+            Rigidbody cannonBallRb = newCannonBall.GetComponent<Rigidbody>();
+            cannonBallRb.AddForce(transform.TransformDirection(Vector3.right) * cannonBallForce, ForceMode.Impulse);
+            cannonBallRb.AddTorque(transform.TransformDirection(Vector3.back) * cannonBallTorque, ForceMode.Impulse);
         }
     }
 }

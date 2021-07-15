@@ -1,30 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawns items at set interval when game isRunning.
+/// </summary>
 public class ItemSpawner : MonoBehaviour
 {
-    public List<GameObject> items;
+    public ObjectPooling objectPool;
 
+    // GameManager difficulty settings
     [SerializeField] private float spawnTimer => GameManager.instance.itemSpawnTimer;
 
-    void Start()
+    private float timer = float.MaxValue;
+
+    void Update()
     {
-        StartCoroutine(SpawnItems());
+        if (GameManager.instance.isRunning)
+        {
+            timer += Time.deltaTime;
+            if (timer >= spawnTimer)
+            {
+                SpawnItem();
+                timer = 0f;
+            }
+        }
     }
 
-    IEnumerator SpawnItems()
+    void SpawnItem()
     {
-        while (true) 
-        {
-            while (GameManager.instance.isRunning) // While game is running
-            {
-                int randomIndex = Random.Range(0, items.Count);
-                Instantiate(items[randomIndex], transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(spawnTimer);
-            }
-
-            yield return null;
-        }
+        int randomIndex = Random.Range(0, objectPool.UniqueItemTypeCount);
+        GameObject newItem = objectPool.RetrieveItem(randomIndex);
+        newItem.transform.position = gameObject.transform.position;
     }
 }
