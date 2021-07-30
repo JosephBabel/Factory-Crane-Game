@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    void Start()
     {
         AudioSource[] audioSources = GetComponents<AudioSource>();
         music = audioSources[0];
@@ -54,6 +54,12 @@ public class AudioManager : MonoBehaviour
 
         crane.volume = 0f;
         crane.Play();
+    }
+
+    void Update()
+    {
+        if (!GameManager.instance.isRunning)
+            StopCraneSound();
     }
 
     IEnumerator FadeSound(AudioSource audioSource, float startVolume, float endVolume, float duration)

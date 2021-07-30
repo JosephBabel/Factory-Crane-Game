@@ -7,7 +7,6 @@ public class MainMenuUI : UI
     public Button easyButton;
     public Button mediumButton;
     public Button hardButton;
-    public Button quitButton;
 
     public Toggle muteMusicToggle;
     public Toggle muteSFXToggle;
@@ -15,14 +14,12 @@ public class MainMenuUI : UI
     private EventTrigger easyTrigger;
     private EventTrigger mediumTrigger;
     private EventTrigger hardTrigger;
-    private EventTrigger quitTrigger;
 
     protected override void Awake()
     {
         easyTrigger = easyButton.GetComponent<EventTrigger>();
         mediumTrigger = mediumButton.GetComponent<EventTrigger>();
         hardTrigger = hardButton.GetComponent<EventTrigger>();
-        quitTrigger = quitButton.GetComponent<EventTrigger>();
         base.Awake();
     }
 
@@ -35,16 +32,22 @@ public class MainMenuUI : UI
         mediumButton.onClick.AddListener(CloseUI);
         hardButton.onClick.AddListener(GameManager.instance.SelectHardMode);
         hardButton.onClick.AddListener(CloseUI);
-        quitButton.onClick.AddListener(GameManager.instance.QuitGame);
 
-        // Add Button sfx triggers
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerEnter;
-        entry.callback.AddListener((eventData) => { AudioManager.instance.PlayClip("Menu_Select"); });
-        easyTrigger.triggers.Add(entry);
-        mediumTrigger.triggers.Add(entry);
-        hardTrigger.triggers.Add(entry);
-        quitTrigger.triggers.Add(entry);
+        // Add Button hover sfx
+        EventTrigger.Entry pointerEnterEntry = new EventTrigger.Entry();
+        pointerEnterEntry.eventID = EventTriggerType.PointerEnter;
+        pointerEnterEntry.callback.AddListener((eventData) => { AudioManager.instance.PlayClip("Menu_Select"); });
+        easyTrigger.triggers.Add(pointerEnterEntry);
+        mediumTrigger.triggers.Add(pointerEnterEntry);
+        hardTrigger.triggers.Add(pointerEnterEntry);
+
+        // Add Button click sfx
+        EventTrigger.Entry pointerClickEntry = new EventTrigger.Entry();
+        pointerClickEntry.eventID = EventTriggerType.PointerClick;
+        pointerClickEntry.callback.AddListener((eventData) => { AudioManager.instance.PlayClip("Menu_Press"); });
+        easyTrigger.triggers.Add(pointerClickEntry);
+        mediumTrigger.triggers.Add(pointerClickEntry);
+        hardTrigger.triggers.Add(pointerClickEntry);
 
         // Add Toggle listeners
         muteMusicToggle.onValueChanged.AddListener(delegate { AudioManager.instance.ToggleMusic(muteMusicToggle.isOn); });

@@ -82,7 +82,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shininess: 0.20801204
-    - _Smoothness: 0.148
+    - _Smoothness: 0.193
     - _SmoothnessSource: 0
     - _SpecSource: 0
     - _SpecularHighlights: 0
@@ -90,8 +90,8 @@ Material:
     - _Surface: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 0.20801204}
+    - _BaseColor: {r: 0.2830189, g: 0.18022428, b: 0.18022428, a: 0.20801204}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 1, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 1, g: 1, b: 1, a: 0.148}
+    - _EmissionColor: {r: 1.457849, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 0.193}
   m_BuildTextureStacks: []

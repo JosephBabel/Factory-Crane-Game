@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -41,7 +38,6 @@ public class GameManager : MonoBehaviour
     private bool hasStartedOnce;
     private bool isEnded;
 
-    private Vector3 originalGravity;
     private float oneSecondTimer = 1f;
 
     void Awake()
@@ -60,7 +56,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        originalGravity = Physics.gravity;
         ResetGameValues();
         OpenMainMenu();
     }
@@ -88,6 +83,7 @@ public class GameManager : MonoBehaviour
                 if (oneSecondTimer >= 1)
                 {
                     gameOverlayUI.timerAnimation.StartAnimation();
+                    AudioManager.instance.PlayClip("Beep");
                     oneSecondTimer = 0f;
                 }
             }
@@ -96,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SetUpGame()
     {
-        // Load game
+        // Reload game
         if (hasStartedOnce)
         {
             AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync("Game", LoadSceneMode.Single);
@@ -104,13 +100,10 @@ public class GameManager : MonoBehaviour
                 yield return null;
         }
 
-        // Finished loading
-        hasStartedOnce = true; // Prevents game from reloading for first time
-        isPaused = false;
-        isEnded = false;
+        hasStartedOnce = true; // Prevent game from reloading for first time
         ResetGameValues();
-        CloseMainMenu();
         gameOverlayUI = Instantiate(gameOverlayUIPrefab).GetComponent<GameOverlayUI>();
+        UnpauseGame();
     }
 
     // ABSTRACTION
@@ -129,24 +122,19 @@ public class GameManager : MonoBehaviour
 
     void PauseGame()
     {
-        isRunning = false;
         isPaused = true;
+        isRunning = false;
         Time.timeScale = 0f;
         mainMenuUI = Instantiate(mainMenuUIPrefab).GetComponent<MainMenuUI>();
     }
 
     void UnpauseGame()
     {
-        isRunning = true;
         isPaused = false;
-        Time.timeScale = 1f;
-        mainMenuUI.CloseUI();
-    }
-
-    void CloseMainMenu()
-    {
         isRunning = true;
         Time.timeScale = 1f;
+        if (mainMenuUI) 
+            mainMenuUI.CloseUI();
     }
 
     void UpdateTime()
@@ -159,6 +147,8 @@ public class GameManager : MonoBehaviour
 
     void ResetGameValues()
     {
+        isPaused = false;
+        isEnded = false;
         timeLeft = 120f;
         totalProfit = 0;
         bombsExplodedCounter = 0;
@@ -181,7 +171,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SelectEasyMode()
     {
-        Physics.gravity = originalGravity;
+        Physics.gravity = new Vector3(0, -9.81f, 0);
         dropYHeight = 15f;
         cannonBallMinSpawnTimer = 4f;
         cannonBallMaxSpawnTimer = 7f;
@@ -196,7 +186,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SelectMediumMode()
     {
-        Physics.gravity = originalGravity * 2f;
+        Physics.gravity = new Vector3(0, -9.81f, 0) * 2f;
         dropYHeight = 15f;
         cannonBallMinSpawnTimer = 3f;
         cannonBallMaxSpawnTimer = 5f;
@@ -211,7 +201,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SelectHardMode()
     {
-        Physics.gravity = originalGravity * 2.5f;
+        Physics.gravity = new Vector3(0, -9.81f, 0) * 2.5f;
         dropYHeight = 15f;
         cannonBallMinSpawnTimer = 2f;
         cannonBallMaxSpawnTimer = 4f;
@@ -219,18 +209,6 @@ public class GameManager : MonoBehaviour
         dropBoxSpeed = 12f;
         conveyorSpeed = 1.5f;
         StartCoroutine(SetUpGame());
-    }
-
-    /// <summary>
-    /// Quits the game.
-    /// </summary>
-    public void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
     }
 
     /// <summary>

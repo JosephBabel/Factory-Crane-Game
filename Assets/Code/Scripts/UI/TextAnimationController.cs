@@ -44,7 +44,6 @@ public class TextAnimationController : MonoBehaviour
         }
         else if (textMeshProUGUI)
         {
-            originalPosition = transform.position;
             originalFontSize = textMeshProUGUI.fontSize;
             originalColor = textMeshProUGUI.color;
         }
@@ -66,6 +65,8 @@ public class TextAnimationController : MonoBehaviour
         {
             if (returnToDefaultStateOnAnimationEnd)
                 ReverseAnimation();
+            else if (destroyOnAnimationEnd)
+                Destroy(gameObject);
         }));
     }
 
@@ -91,7 +92,6 @@ public class TextAnimationController : MonoBehaviour
             }
             else if (textMeshProUGUI)
             {
-                transform.position = Vector3.Lerp(startPosition, endPosition, timeElapsed / duration);
                 textMeshProUGUI.fontSize = Mathf.Lerp(startFontSize, endFontSize, timeElapsed / duration);
                 textMeshProUGUI.color = Color.Lerp(startColor, endColor, timeElapsed / duration);
             }
@@ -109,7 +109,6 @@ public class TextAnimationController : MonoBehaviour
         }
         else if (textMeshProUGUI)
         {
-            transform.position = endPosition;
             textMeshProUGUI.fontSize = endFontSize;
             textMeshProUGUI.color = endColor;
         }
